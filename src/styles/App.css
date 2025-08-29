@@ -1,0 +1,415 @@
+/* Prevent horizontal scrollbar */
+html, body {
+  overflow-x: hidden;
+}
+
+* {
+  box-sizing: border-box;
+}
+.app {
+  font-family: Arial, sans-serif;
+  padding: 0;
+  width: 100vw;
+}
+
+.main-content {
+  display: flex;
+  flex-direction: row;
+  gap: 40px;
+  margin: 0;
+  width: 100vw;
+  min-height: 70vh;
+  align-items: stretch;
+  justify-content: flex-start;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+.pokedex, .team-view {
+  width: 45%;
+  border: 1px solid #ccc;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.pokemon-grid, .team-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.pokedex-card, .team-card, .empty-slot {
+  border: 1px solid #eee;
+  padding: 10px;
+  border-radius: 5px;
+  text-align: center;
+  background-color: #fff;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.pokedex-card img, .team-card img {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+}
+
+.pokedex-card h3 {
+  margin: 10px 0 5px;
+  text-transform: capitalize;
+  font-size: 1em;
+}
+
+.pokedex-card button {
+  background-color: #4CAF50;
+  color: white;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.pokedex-card button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+.search-bar {
+  width: calc(100% - 20px);
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.team-card {
+  cursor: pointer;
+  position: relative;
+  background-color: #e6f7ff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 120px;
+}
+
+.team-card .remove-button {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background-color: #ff4d4f;
+  color: white;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8em;
+  font-weight: bold;
+}
+
+.empty-slot {
+  background-color: #f0f0f0;
+  color: #888;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 120px;
+  font-style: italic;
+}
+/* --- Global Styles & Layout --- */
+body {
+  margin: 0;
+  font-family: 'Press Start 2P', cursive, Arial, sans-serif; /* A classic retro font for theme */
+  /* Fallback to Arial, sans-serif if custom font not loaded */
+}
+
+/* If you want to use a custom font like 'Press Start 2P',
+   you'll need to import it in your index.html or at the top of this CSS:
+   @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+*/
+
+
+.app {
+  /* Using more vibrant colors and a subtle gradient for the background */
+  background: linear-gradient(135deg, #FFDD00 0%, #FF2D55 100%); /* Yellow to Red gradient */
+  min-height: 100vh; /* Ensure it takes full viewport height */
+  padding: 20px; /* Reduced overall padding to give more content space */
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center content horizontally */
+  color: #333; /* Darker text for contrast */
+}
+
+h1 {
+  font-size: 3.5em; /* Larger, more impactful title */
+  color: #FFFFFF; /* White text for contrast on red header */
+  text-shadow: 4px 4px #2A75BB; /* Blue shadow for retro effect */
+  margin-bottom: 20px;
+  font-family: 'Press Start 2P', cursive, Arial, sans-serif; /* Apply font to title */
+  letter-spacing: 2px;
+}
+
+.main-content {
+  display: flex;
+  flex-direction: row;
+  gap: 40px;
+  margin: 0;
+  width: 100%;
+  min-height: 70vh;
+  align-items: stretch;
+  justify-content: center;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+/* --- Section Containers (Pokedex & TeamView) --- */
+.pokedex, .team-view {
+  flex: 1 1 0;
+  min-width: 400px;
+  max-width: none;
+  width: 100%;
+  border: 4px solid #2A75BB;
+  border-radius: 15px;
+  box-shadow: 8px 8px 0px 0px rgba(0,0,0,0.2), 0 0 15px rgba(0,0,0,0.1);
+  background: #fdfdfd;
+  padding: 25px;
+  box-sizing: border-box;
+  height: 100%;
+}
+
+/* --- Headers for Sections --- */
+.pokedex h2, .team-view h2 {
+  font-family: 'Press Start 2P', cursive, Arial, sans-serif;
+  font-size: 2em;
+  color: #EE1515; /* Red for Pokedex, Blue for TeamView */
+  text-shadow: 2px 2px #FFDD00; /* Yellow shadow */
+  margin-bottom: 25px;
+  letter-spacing: 1px;
+}
+
+.team-view h2 {
+  color: #2A75BB; /* Specific blue for team view header */
+}
+
+/* --- Search Bar --- */
+.search-bar {
+  width: calc(100% - 20px); /* Adjust width to account for padding */
+  max-width: 400px; /* Limit search bar width */
+  padding: 12px 15px;
+  margin: 0 auto 30px auto; /* Centered with more bottom margin */
+  border: 3px solid #FFDD00; /* Yellow border */
+  border-radius: 8px;
+  font-size: 1.1em;
+  outline: none; /* Remove default outline */
+  box-shadow: inset 0 1px 3px rgba(0,0,0,0.1); /* Inner shadow */
+  transition: border-color 0.3s ease;
+  background-color: #fff;
+  color: #111;
+}
+
+.search-bar:focus {
+  border-color: #FF2D55; /* Red border on focus */
+}
+
+/* --- Grids (Pokedex & Team) --- */
+.pokemon-grid, .team-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); /* Slightly smaller cards, more per row */
+  gap: 20px; /* Consistent gap */
+  margin-top: 0; /* No top margin here, handled by section padding */
+  justify-content: center; /* Center items in the grid */
+}
+
+
+/* --- Pokedex Card --- */
+.pokedex-card {
+  border: 3px solid #EE1515; /* Red border */
+  border-radius: 12px;
+  padding: 15px 10px;
+  background-color: #ffe0e0; /* Light red background for pokedex cards */
+  box-shadow: 4px 4px 0px 0px rgba(0,0,0,0.15); /* Themed card shadow */
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  cursor: pointer; /* Indicate clickable */
+}
+
+.pokedex-card:hover {
+  transform: translateY(-5px); /* Lift effect on hover */
+  box-shadow: 6px 6px 0px 0px rgba(0,0,0,0.25);
+}
+
+.pokedex-card img {
+  width: 100px;
+  height: 100px;
+  image-rendering: pixelated; /* Optional: for a more retro pixel art feel */
+  background: radial-gradient(circle, #fff 60%, #eee 100%); /* Subtle radial background */
+  border-radius: 50%;
+  border: 2px solid #EE1515;
+}
+
+.pokedex-card h3 {
+  color: #333;
+  font-size: 1.2em;
+  margin: 10px 0 5px;
+  font-family: 'Press Start 2P', cursive, Arial, sans-serif;
+}
+
+.pokedex-card p {
+  font-size: 0.9em;
+  color: #555;
+}
+
+.pokedex-card button {
+  background-color: #2A75BB; /* Blue add button */
+  color: white;
+  padding: 10px 15px;
+  border: 2px solid #1a5a9c; /* Darker blue border */
+  border-radius: 5px;
+  margin-top: 15px;
+  font-weight: bold;
+  font-size: 0.9em;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.pokedex-card button:hover:not(:disabled) {
+  background-color: #1a5a9c;
+  border-color: #0d3b66;
+}
+
+.pokedex-card button:disabled {
+  background-color: #999999;
+  border-color: #777777;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+/* Specific styling for 'In Team' state */
+.pokedex-card button.in-team {
+  background-color: #FFDD00; /* Yellow for 'In Team' */
+  color: #333;
+  border-color: #d1b200;
+}
+.pokedex-card button.in-team:hover {
+    background-color: #d1b200;
+}
+
+
+/* --- Team Card & Slots --- */
+.team-slot {
+  border: 3px dashed #2A75BB; /* Dashed blue border for slots */
+  border-radius: 12px;
+  background-color: #e0f7fa; /* Light blue background for team slots */
+  box-shadow: inset 0 0 10px rgba(0,0,0,0.05); /* Subtle inner shadow for depth */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 150px; /* Consistent height for slots */
+  position: relative;
+  overflow: hidden; /* Ensure remove button doesn't overflow */
+}
+
+.team-card-inner { /* This is the actual pokemon content inside a slot */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    height: 100%; /* Take full height of the slot */
+    width: 100%; /* Take full width of the slot */
+    background-color: transparent; /* Ensure card content itself is transparent to show slot background */
+    cursor: default; /* Not clickable as a whole */
+}
+
+.team-card-inner img {
+  width: 100px;
+  height: 100px;
+  image-rendering: pixelated; /* Pixelated look */
+  background: radial-gradient(circle, #fff 60%, #e0f7fa 100%); /* Blend with slot background */
+  border-radius: 50%;
+  border: 2px solid #2A75BB;
+}
+
+.team-card-inner p {
+  font-size: 1.2em;
+  font-weight: bold;
+  color: #333;
+  margin-top: 8px;
+  text-transform: capitalize;
+  font-family: 'Press Start 2P', cursive, Arial, sans-serif;
+  letter-spacing: 0.5px;
+}
+
+.remove-button {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background-color: #EE1515; /* Red remove button */
+  color: white;
+  border: 2px solid #b70a0a;
+  border-radius: 50%;
+  width: 30px; /* Larger hit area */
+  height: 30px; /* Larger hit area */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2em;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+  z-index: 10; /* Ensure it's on top */
+}
+
+.remove-button:hover {
+  background-color: #b70a0a;
+  transform: scale(1.1); /* Pop effect on hover */
+}
+
+.empty-slot {
+  background-color: transparent; /* Use the slot background */
+  color: #666;
+  font-style: italic;
+  font-size: 1.2em;
+  height: 100%;
+  width: 100%;
+  display: flex; /* Ensure centering */
+  align-items: center;
+  justify-content: center;
+  font-family: 'Press Start 2P', cursive, Arial, sans-serif;
+  padding: 10px; /* Ensure text isn't too close to edge */
+  box-sizing: border-box;
+}
+
+/* --- Responsive Adjustments --- */
+/* Remove forced column layout for desktop, always use row layout for .main-content */
+
+@media (max-width: 768px) {
+  h1 {
+    font-size: 2.5em;
+    text-shadow: 3px 3px #2A75BB;
+  }
+  .pokedex h2, .team-view h2 {
+    font-size: 1.5em;
+    text-shadow: 1.5px 1.5px #FFDD00;
+  }
+  .pokemon-grid, .team-grid {
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); /* Smaller cards on smaller screens */
+    gap: 15px;
+  }
+  .pokedex-card img, .team-card-inner img {
+    width: 80px;
+    height: 80px;
+  }
+  .pokedex-card button {
+    padding: 8px 12px;
+    font-size: 0.85em;
+  }
+  .team-slot {
+      min-height: 120px;
+  }
+  .team-card-inner p {
+      font-size: 1em;
+  }
+}
